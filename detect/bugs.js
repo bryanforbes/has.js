@@ -41,7 +41,7 @@
         // but since named function expression identifier leaks onto the enclosing scope in IE,
         // it will be resolved to a function
         var f = function x(){},
-           buggy = typeof x == FN;
+            buggy = typeof x == FN;
         if(buggy){
           x = null;
         }
@@ -49,7 +49,8 @@
     });
 
     addtest("bug-string-replace-ignores-functions", function(){
-        var buggy = null, s = "a";
+        var buggy = null,
+            s = "a";
         if(toString.call(s.replace) == FUNCTION_CLASS){
             buggy = s.replace(s, function(){ return ""; }) != "";
         }
@@ -135,7 +136,8 @@
     // Opera 9.x (possibly other versions as well) returns actual values (instead of "auto")
     // for statically positioned elements
     addtest("bug-computed-values-for-static", function(g, d){
-        var cs, view,
+        var cs,
+            view,
             de = d.documentElement,
             style = d.style,
             position = null,
@@ -200,7 +202,8 @@
     });
 
     addtest("bug-query-selector-ignores-caps", function(g, d, el){
-        var e2, buggy = null;
+        var e2,
+            buggy = null;
 
         if(d.compatMode == "BackCompat" && has.isHostType(el, "querySelector")){
             e2 = d.createElement("span");
@@ -219,7 +222,8 @@
 
     // true for IE
     addtest("bug-getelementsbytagname-returns-comment-nodes", function(g, d, el){
-        var all, buggy = null;
+        var all,
+            buggy = null;
 
         el.appendChild(d.createElement("span")).appendChild(d.createTextNode("a"));
         el.appendChild(d.createComment("b"));
@@ -236,11 +240,11 @@
     // name attribute can not be set at run time in IE < 8
     // http://msdn.microsoft.com/en-us/library/ms536389.aspx
     addtest("bug-readonly-element-name", function(g, d, el){
-        var buggy,
-            input = el.appendChild(d.createElement("input"));
+        var buggy, form = el.appendChild(d.createElement("form")),
+            input = form.appendChild(d.createElement("input"));
 
-        input.name = 'x';
-        buggy = !el.getElementsByTagName('*')['x'];
+        input.name = "x";
+        buggy = input !== form.elements["x"];
         has.clearElement(el);
         return buggy;
     });
@@ -251,10 +255,10 @@
         var buggy = true,
             input = el.appendChild(d.createElement("input"));
 
-        input.type = 'text';
+        input.type = "text";
         try {
-          input.type = 'password';
-          buggy = input.type != 'password';
+          input.type = "password";
+          buggy = input.type != "password";
         } catch (e) { }
         has.clearElement(el);
         return buggy;
@@ -346,7 +350,7 @@
         var buggy,
             id = "__test_" + Number(new Date()),
             script = d.createElement("script"),
-            root = d.getElementsByTagName('script')[0].parentNode;
+            root = d.getElementsByTagName("script")[0].parentNode;
 
         script.id = id;
         script.type = "text/javascript";
@@ -360,7 +364,7 @@
         var buggy,
             script = d.createElement("script"),
             id = "__test_" + Number(new Date()),
-            root = d.getElementsByTagName('script')[0].parentNode;
+            root = d.getElementsByTagName("script")[0].parentNode;
 
         script.id = id;
         script.type = "text/javascript";
@@ -416,3 +420,4 @@
     });
 
 })(has, has.add, has.cssprop);
+

@@ -5,7 +5,7 @@
     ;
 
     // FIXME: isn't really native
-    // miller device gives "[object Console]" in Opera & Webkit. Object in FF, though. ^pi
+    // miller device gives "[object Console]" in Opera & WebKit. Object in FF, though. ^pi
     addtest("native-console", function(g){
         return ("console" in g);
     });
@@ -43,14 +43,13 @@
     });
 
     /**
-     * geolocation tests for the new Geolocation API specification.
-     *   This test is a standards compliant-only test; for more complete
-     *   testing, including a Google Gears fallback, please see:
+     * Geolocation tests for the new Geolocation API specification:
+     * This test is a standards compliant-only test; for more complete
+     * testing, including a Google Gears fallback, please see:
      *   http://code.google.com/p/geo-location-javascript/
      * or view a fallback solution using google's geo API:
      *   http://gist.github.com/366184
      */
-
     addtest("native-geolocation", function(g){
         return has("native-navigator") && ("geolocation" in g.navigator);
     });
@@ -63,13 +62,12 @@
         return ("ondeviceorientation" in g);
     });
 
-    /*
+    /**
      * not sure if there is any point in testing for worker support
      * as an adequate fallback is impossible/pointless
      *
      * ^rw
      */
-
     addtest("native-worker", function(g){
         return ("Worker" in g);
     });
@@ -128,21 +126,21 @@
 
 
     addtest("native-localstorage", function(g){
-      //  Thanks Modernizr!
-      var supported = false;
-      try{
-        supported = ("localStorage" in g) && ("setItem" in localStorage);
-      }catch(e){}
-      return supported;
+        //  Thanks Modernizr!
+        var supported = false;
+        try{
+            supported = ("localStorage" in g) && ("setItem" in localStorage);
+        }catch(e){}
+        return supported;
     });
 
     addtest("native-sessionstorage", function(g){
-      //  Thanks Modernizr!
-      var supported = false;
-      try{
-        supported = ("sessionStorage" in g) && ("setItem" in sessionStorage);
-      }catch(e){}
-      return supported;
+        //  Thanks Modernizr!
+        var supported = false;
+        try{
+            supported = ("sessionStorage" in g) && ("setItem" in sessionStorage);
+        }catch(e){}
+        return supported;
     });
 
     addtest("native-history-state", function(g){
@@ -153,4 +151,29 @@
         return ("WebSocket" in g);
     });
 
+    addtest("native-details", function(g, d){
+        return (function(){
+            var el = d.createElement("details"),
+                de = d.documentElement,
+                fake,
+                root = d.body || (function(){
+                    fake = true;
+                    return de.insertBefore(d.createElement("body"), de.firstElementChild || de.firstChild);
+                }()),
+                diff;
+            el.innerHTML = "<summary>a</summary>b";
+            el.style.display = "block";
+            root.appendChild(el);
+            diff = el.offsetHeight;
+            el.open = true;
+            diff = diff != el.offsetHeight;
+            root.removeChild(el);
+            if(fake){
+                root.parentNode.removeChild(root);
+            }
+            return diff;
+        }());
+    });
+
 })(has, has.add, has.cssprop);
+

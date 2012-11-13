@@ -22,7 +22,7 @@
     // works in all but IE < 9
     addtest("dom-addeventlistener", function(g, d){
         return has.isHostType(d, "addEventListener");
-    }, true);
+    });
 
     // works in all but IE
     addtest("dom-createelementns", function(g, d){
@@ -89,7 +89,8 @@
     // http://msdn.microsoft.com/en-us/library/ms536389(VS.85).aspx vs
     // http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-2141741547
     addtest("dom-create-attr", function(g, d){
-        var input, supported = false;
+        var input,
+            supported = false;
         try{
             input = d.createElement("<input type='hidden' name='hasjs'>");
             supported = input.type == "hidden" && input.name == "hasjs";
@@ -128,8 +129,10 @@
     // test for dynamic-updating base tag support (allows us to avoid href & src attr rewriting)
     // false for Firefox < 4 and IE < 8
     addtest("dom-dynamic-base", function (g, d, el){
-        var backup, base,
-            q = d.createElement("q"),
+        var attempt,
+            backup,
+            base,
+            attempts = [[d.createElement("a"), "href"], [d.createElement("q"), "cite"]],
             head = d.getElementsByTagName("head")[0],
             href = location.href,
             fake = false,
@@ -144,9 +147,14 @@
 
             backup = base.href || href.slice(0, token ? href.indexOf(token) : href.length).replace(/[^\/]*$/, "");
             base.href = location.protocol + "//x";
-            q.cite = "y";
-            supported = q.cite.indexOf("x/y") > -1;
 
+            // check support on more than one element to be thorough
+            while(attempt = attempts.pop()){
+                if(supported != false){
+                    attempt[0][attempt[1]] = "y";
+                    supported = attempt[0][attempt[1]].indexOf("x/y") > -1;
+                }
+            }
             // reset href before removal, otherwise href persists in Opera
             base.href = backup;
             if(fake){
@@ -156,16 +164,20 @@
         return supported;
     });
 
-    addtest("dom-classlist", function(g, d, e){
-        var iht = has.isHostType;
-        if(!iht(e, "classList")){
-            return false;
-        }
+    addtest("dom-nodelist-sliceable", function(g, d, el){
+        var supported = false,
+            de = d.documentElement,
+            id = de.id;
 
-        var cl = e.classList;
+        // Opera 9.25 bug
+        de.id = "length";
+        // older Safari will return an empty array
+        try{
+            supported = !![].slice.call(d.childNodes, 0)[0];
+        }catch(e){}
 
-        return iht(cl, "item") && iht(cl, "contains") && iht(cl, "add") &&
-            iht(cl, "remove") && iht(cl, "toggle");
+        de.id = id;
+        return supported;
     });
 
 })(has, has.add, has.cssprop);

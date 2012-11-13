@@ -39,7 +39,7 @@
     });
 
     addtest("array-reduceright", function(){
-        return toString.call(EMPTY_ARRAY.reduce) == FUNCTION_CLASS;
+        return toString.call(EMPTY_ARRAY.reduceRight) == FUNCTION_CLASS;
     });
 
     addtest("array-some", function(){
@@ -51,22 +51,6 @@
             has("array-indexof") && has("array-isarray") && has("array-lastindexof") &&
             has("array-map") && has("array-reduce") && has("array-reduceright") &&
             has("array-some");
-    });
-
-    addtest("array-slice-nodelist", function(g, d, el){
-        var supported = true,
-            de = d.documentElement,
-            id = de.id;
-
-        // Opera 9.25 bug
-        de.id = "length";
-        // older Safari will return an empty array
-        try{
-            supported = !!EMPTY_ARRAY.slice.call(d.childNodes, 0)[0];
-        }catch(e){}
-
-        de.id = id;
-        return supported;
     });
 
 })(has, has.add, has.cssprop);
