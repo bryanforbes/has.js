@@ -1,4 +1,6 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
     // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
 
@@ -87,4 +89,5 @@
                has("object-issealed") && has("object-keys") && has("object-preventextensions") && has("object-seal");
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

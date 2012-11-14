@@ -1,6 +1,8 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
-    if(!has("dom")){ return; }
+    if(!has("dom")){ return has; }
 
     var script = document.createElement("script");
 
@@ -12,4 +14,5 @@
         return ("async" in script);
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

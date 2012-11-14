@@ -1,6 +1,8 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
-    if(!has("dom")){ return; }
+    if(!has("dom")){ return has; }
 
     var video = document.createElement("video");
 
@@ -25,4 +27,5 @@
         return has("video") && video.canPlayType('video/webm; codecs="vp8, vorbis"');
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

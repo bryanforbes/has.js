@@ -1,4 +1,6 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
     var toString = {}.toString,
         NEW_DATE = new Date,
@@ -22,4 +24,5 @@
                toString.call(performance.webkitNow) == FUNCTION_CLASS;
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

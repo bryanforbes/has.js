@@ -1,4 +1,6 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
     function event_tests(g, d, test){
         var de = d.documentElement,
@@ -38,7 +40,7 @@
         return result[test];
     }
 
-    if(!has("dom")){ return; }
+    if(!has("dom")){ return has; }
 
     addtest("event-contextmenu", function(g, d, el){
         var supported = null;
@@ -69,4 +71,5 @@
         return event_tests(g, d, "relatedtarget");
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

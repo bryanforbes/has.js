@@ -1,5 +1,8 @@
-(function(has, addtest, cssprop, undef){
-    var FN = "function";
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop,
+        undef,
+        FN = "function";
 
     // Determines whether the (possibly native) `JSON.stringify` and `parse`
     // implementations are spec-compliant. Based on work by Ken Snyder.
@@ -111,4 +114,6 @@
     addtest("json", function(){
         return has("json-stringify") && has("json-parse");
     });
-})(has, has.add, has.cssprop);
+
+    return has;
+});

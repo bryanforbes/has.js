@@ -1,6 +1,8 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
-    if(!has("dom")){ return; }
+    if(!has("dom")){ return has; }
 
     // FROM cft.js
     addtest("css-enabled", function(g, d, el){
@@ -149,4 +151,5 @@
     // FIXME: modernizr has flexbox, backgroundsize, borderimage, cssanimations, csscolumns, cssgradients,
     // cssreflections, csstransforms, csstransforms3d, csstransitions, fontface
 
-})(has, has.add, has.cssprop);
+    return has;
+});

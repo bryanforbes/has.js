@@ -1,4 +1,7 @@
- (function(has, addtest, cssprop, undefined){
+ define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop,
+        undefined;
 
     var toString = {}.toString,
         FUNCTION_CLASS = "[object Function]";
@@ -13,4 +16,5 @@
         return test();
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

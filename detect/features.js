@@ -1,4 +1,7 @@
-(function(has, addtest, cssprop, undefined){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop,
+        undefined;
 
     var STR = "string",
         FN = "function"
@@ -175,5 +178,5 @@
         }());
     });
 
-})(has, has.add, has.cssprop);
-
+    return has;
+});

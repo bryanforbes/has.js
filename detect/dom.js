@@ -1,6 +1,8 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
-    if(!has("dom")){ return; }
+    if(!has("dom")){ return has; }
 
     addtest("dom-quirks", function(g, d, el){
         var supported;
@@ -180,4 +182,5 @@
         return supported;
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

@@ -1,11 +1,13 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
     var toString = {}.toString,
         STR = "string",
         FN = "function"
     ;
 
-    if(!has("dom")){ return; }
+    if(!has("dom")){ return has; }
 
     addtest("canvas", function(g){
         return has.isHostType(g, "CanvasRenderingContext2D");
@@ -55,4 +57,5 @@
         return supported;
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

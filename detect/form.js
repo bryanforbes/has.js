@@ -1,4 +1,6 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
     var STR = "string",
         FN = "function"
@@ -11,7 +13,7 @@
                (/search|tel/.test(type) || input.value != "\x01" || !input.checkValidity());
     }
 
-    if(!has("dom")){ return; }
+    if(!has("dom")){ return has; }
 
     var input = document.createElement("input");
 
@@ -155,4 +157,5 @@
         return typeValidates("range");
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

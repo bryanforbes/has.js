@@ -1,4 +1,6 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
     var toString = {}.toString,
         EMPTY_ARRAY = [],
@@ -53,4 +55,5 @@
             has("array-some");
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

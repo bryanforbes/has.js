@@ -1,11 +1,13 @@
-(function(has, addtest, cssprop){
+define(['../has'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
     var CAN_PLAY_GUESSES = { "maybe": 1, "probably": 1 },
         STR = "string",
         FN = "function"
     ;
 
-    if(!has("dom")){ return; }
+    if(!has("dom")){ return has; }
 
     var audio = document.createElement("audio");
 
@@ -35,4 +37,5 @@
             CAN_PLAY_GUESSES[audio.canPlayType("audio/aac;")]);
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+});

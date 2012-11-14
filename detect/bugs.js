@@ -1,4 +1,6 @@
-(function(has, addtest, cssprop){
+define(['./dom', './strings'], function(has){
+    var addtest = has.add,
+        cssprop = has.cssprop;
 
     // http://github.com/kangax/cft
     var toString = {}.toString,
@@ -91,7 +93,7 @@
         return (.9).toFixed() == 0;
     });
 
-    if(!has("dom")){ return; }
+    if(!has("dom")){ return has; }
 
     addtest("bug-offset-values-positioned-inside-static", function(g, d, el){
         var div, fake,
@@ -419,5 +421,5 @@
         return buggy;
     });
 
-})(has, has.add, has.cssprop);
-
+    return has;
+});
